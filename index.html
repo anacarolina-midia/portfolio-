@@ -411,6 +411,91 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
   .steps,.dif-grid{grid-template-columns:1fr;}
   .hero-bg{font-size:40vw;}
 }
+/* clickable phones */
+.case-phone,.phone-wrap{cursor:pointer;}
+.case-phone:hover,.phone-wrap:hover{opacity:0.92;}
+.video-lightbox{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0);
+  pointer-events:none;
+  transition:background .35s ease;
+}
+.video-lightbox.active{
+  background:rgba(0,0,0,0.85);
+  pointer-events:all;
+}
+.lightbox-inner{
+  position:relative;
+  width:min(90vw, 420px);
+  aspect-ratio:9/16;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,0.8);
+  transform:scale(0.6);
+  opacity:0;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
+}
+.video-lightbox.active .lightbox-inner{
+  transform:scale(1);
+  opacity:1;
+}
+.lightbox-inner video{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.lightbox-close{
+  position:absolute;top:14px;right:14px;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(0,0,0,0.55);
+  border:1.5px solid rgba(255,255,255,0.4);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;
+  color:#fff;font-size:18px;line-height:1;
+  transition:background .2s, transform .2s;
+}
+.lightbox-close:hover{background:rgba(0,0,0,0.8);transform:scale(1.1);}
+
+/* ── IMAGE LIGHTBOX ── */
+.image-lightbox{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0);
+  pointer-events:none;
+  transition:background .35s ease;
+}
+.image-lightbox.active{
+  background:rgba(0,0,0,0.85);
+  pointer-events:all;
+}
+.image-lightbox-inner{
+  position:relative;
+  width:min(90vw, 420px);
+  aspect-ratio:9/16;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,0.8);
+  transform:scale(0.6);
+  opacity:0;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
+}
+.image-lightbox.active .image-lightbox-inner{
+  transform:scale(1);
+  opacity:1;
+}
+.image-lightbox-inner img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.image-lightbox-close{
+  position:absolute;top:14px;right:14px;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(0,0,0,0.55);
+  border:1.5px solid rgba(255,255,255,0.4);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;
+  color:#fff;font-size:18px;line-height:1;
+  transition:background .2s, transform .2s;
+}
+.image-lightbox-close:hover{background:rgba(0,0,0,0.8);transform:scale(1.1);}
 </style>
 </head>
 <body>
@@ -702,28 +787,6 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
     </div>
   </div>
 
-  <!-- TIGUS MÓVEIS -->
-  <div class="case-card reveal">
-    <div class="case-visual">
-      <!-- Inserir: videos/tigus-moveis.mp4 -->
-      <div class="case-phones-stack">
-        <div class="case-phone bg-tigus">
-        <video src="videos/tigus-moveis.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
-      </div>
-        <div class="case-phone bg-tigus" style="background:#0d2240;">
-        <video src="videos/tigus-moveis-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
-      </div>
-      </div>
-    </div>
-    <div class="case-info">
-      <div class="case-seg">Varejo · Móveis</div>
-      <h2 class="case-brand">Tigus Móveis</h2>
-      <p class="case-tagline">Do lançamento de produto ao conteúdo viral</p>
-      <p class="case-desc">Gestão de redes sociais e criação de conteúdo — do lançamento de produtos a vídeos em trend adaptados para o segmento de móveis. Conteúdo que gera identificação, desejo e tráfego para a loja.</p>
-      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Criação de Conteúdo</span><span class="tag">Social Media</span><span class="tag">Stories</span><span class="tag">Atendimento publicitário</span></div>
-    </div>
-  </div>
-
   <!-- STRONG -->
   <div class="case-card reverse reveal">
     <div class="case-visual">
@@ -886,6 +949,22 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
   <p>Social Media · Atendimento Publicitário · Criação de Conteúdo</p>
 </footer>
 
+<!-- VIDEO LIGHTBOX -->
+<div class="video-lightbox" id="videoLightbox">
+  <div class="lightbox-inner" id="lightboxInner">
+    <video id="lightboxVideo" playsinline controls></video>
+    <div class="lightbox-close" id="lightboxClose" aria-label="Fechar vídeo">✕</div>
+  </div>
+</div>
+
+<!-- IMAGE LIGHTBOX -->
+<div class="image-lightbox" id="imageLightbox">
+  <div class="image-lightbox-inner" id="imageLightboxInner">
+    <img id="lightboxImg" src="" alt="Story ampliado">
+    <div class="image-lightbox-close" id="imageLightboxClose" aria-label="Fechar imagem">✕</div>
+  </div>
+</div>
+
 <script>
 // Intersection Observer — reveal animations
 const observer = new IntersectionObserver((entries) => {
@@ -908,6 +987,71 @@ const lineObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.5 });
 document.querySelectorAll('.sec-label').forEach(el => lineObserver.observe(el));
+
+// ── VIDEO LIGHTBOX ──
+const lightbox      = document.getElementById('videoLightbox');
+const lightboxVid   = document.getElementById('lightboxVideo');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(src) {
+  lightboxVid.src = src;
+  lightboxVid.muted = false;
+  lightboxVid.currentTime = 0;
+  lightbox.classList.add('active');
+  lightboxVid.play().catch(() => {});
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  lightboxVid.pause();
+  lightboxVid.src = '';
+  document.body.style.overflow = '';
+}
+
+// ── IMAGE LIGHTBOX ──
+const imageLightbox      = document.getElementById('imageLightbox');
+const lightboxImg        = document.getElementById('lightboxImg');
+const imageLightboxClose = document.getElementById('imageLightboxClose');
+
+function openImageLightbox(src) {
+  lightboxImg.src = src;
+  imageLightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeImageLightbox() {
+  imageLightbox.classList.remove('active');
+  lightboxImg.src = '';
+  document.body.style.overflow = '';
+}
+
+// Click on video mockups → video lightbox
+document.querySelectorAll('.case-phone video, .phone-wrap video').forEach(vid => {
+  const src = vid.getAttribute('src');
+  if (!src) return;
+  const wrapper = vid.closest('.case-phone') || vid.closest('.phone-wrap');
+  if (wrapper) wrapper.addEventListener('click', () => openLightbox(src));
+});
+
+// Click on image mockups (story PNGs) → image lightbox
+document.querySelectorAll('.phone-wrap img').forEach(img => {
+  const src = img.getAttribute('src');
+  if (!src) return;
+  const wrapper = img.closest('.phone-wrap');
+  if (wrapper) wrapper.addEventListener('click', () => openImageLightbox(src));
+});
+
+// Close video lightbox
+lightboxClose.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+// Close image lightbox
+imageLightboxClose.addEventListener('click', (e) => { e.stopPropagation(); closeImageLightbox(); });
+imageLightbox.addEventListener('click', (e) => { if (e.target === imageLightbox) closeImageLightbox(); });
+
+// Close both on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeLightbox(); closeImageLightbox(); }
+});
 
 // Marquee: drag to scroll left/right
 (function() {
@@ -935,6 +1079,5 @@ document.querySelectorAll('.sec-label').forEach(el => lineObserver.observe(el));
   wrap.addEventListener('touchend', () => { isDragging=false; });
 })();
 </script>
-
 </body>
 </html>
