@@ -40,13 +40,22 @@ nav{
 .nav-links a:hover{color:var(--accent);}
 .nav-cta{display:none;}
 
-/* ── SECTION LABEL ── */
+/* ── SECTION LABEL with gold line reveal ── */
 .sec-label{
   display:flex;align-items:center;gap:12px;
   font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
   color:var(--accent);font-weight:400;margin-bottom:1rem;
+  overflow:hidden;
 }
-.sec-label::before{content:'';display:block;width:28px;height:1px;background:var(--accent);}
+.sec-label::before{
+  content:'';display:block;height:1px;background:var(--accent);
+  width:0;transition:width .9s cubic-bezier(.77,0,.18,1);
+}
+.sec-label.line-ready::before{width:28px;}
+
+/* Gold line for dark sections */
+#processo .sec-label::before{background:#d4aa70;}
+#contato .sec-label::before{background:#d4aa70;}
 
 /* ── HERO ── */
 #hero{
@@ -129,42 +138,44 @@ nav{
 
 /* ── FORMATOS INTRO ── */
 #formatos{padding:7rem 3rem;background:var(--white);}
-.form-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-top:2rem;}
+.form-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:2rem;}
 .form-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;}
 .form-title em{font-style:italic;color:var(--accent);}
 .form-desc{font-size:15px;color:var(--muted);line-height:1.8;font-weight:300;margin-top:1.25rem;}
-.form-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--muted);line-height:1.55;font-weight:300;border-left:2px solid var(--accent);padding-left:1.75rem;align-self:flex-end;}
+.form-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--muted);line-height:1.55;font-weight:300;border-left:2px solid var(--accent);padding-left:1.75rem;margin-top:0;align-self:start;}
 
 /* ── FORMATO CARDS ── */
-.formato-block{padding:0;}
+.formato-block{padding:0 3rem 2rem;}
 .formato-card{
-  display:grid;grid-template-columns:55fr 45fr;gap:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
   background:var(--white);border:none;
-  border-radius:0;overflow:hidden;margin-bottom:0;
-  min-height:100vh;
-  transition:none;
+  border-radius:var(--radius-md);overflow:hidden;margin-bottom:3rem;
+  transition:transform .3s;
+  box-shadow:0 8px 40px rgba(0,0,0,0.08);
 }
+.formato-card:hover{transform:translateY(-3px);}
 .formato-card.reverse{direction:rtl;}
 .formato-card.reverse>*{direction:ltr;}
 .formato-visual{
-  background:var(--bg-dark);
+  position:relative;
   display:flex;align-items:center;justify-content:center;
-  padding:2rem 1rem;gap:0;position:relative;
-  min-height:100vh;
+  padding:3rem 2rem;min-height:520px;
+  background:var(--bg-dark);
+  overflow:hidden;
 }
-.phones-stack{position:relative;width:100%;height:85vh;display:flex;align-items:center;justify-content:center;}
+.phones-stack{position:relative;width:100%;height:460px;display:flex;align-items:center;justify-content:center;z-index:2;}
 .phone-wrap{
   position:absolute;
-  border-radius:28px;overflow:hidden;
-  border:0.5px solid rgba(255,255,255,0.12);
-  width:min(280px, 38vh);aspect-ratio:9/16;
+  border-radius:26px;overflow:hidden;
+  border:0.5px solid rgba(255,255,255,0.15);
+  width:190px;aspect-ratio:9/16;
   display:flex;flex-direction:column;
   align-items:flex-start;justify-content:flex-end;
   padding:10px;
-  box-shadow:0 32px 90px rgba(0,0,0,0.65);
+  box-shadow:0 30px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.05);
 }
-.phone-wrap:first-child{transform:rotate(-7deg) translateX(-80px) translateY(20px);z-index:1;}
-.phone-wrap:last-child{transform:rotate(4deg) translateX(70px) translateY(-20px);z-index:2;}
+.phone-wrap:first-child{transform:rotate(-7deg) translateX(-65px) translateY(14px);z-index:1;}
+.phone-wrap:last-child{transform:rotate(4deg) translateX(55px) translateY(-14px);z-index:2;}
 .phone-play{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);
   width:30px;height:30px;border-radius:50%;
@@ -187,7 +198,7 @@ nav{
 }
 .video-placeholder span{font-size:18px;display:block;margin-bottom:6px;opacity:0.35;}
 
-.formato-info{padding:4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;min-height:100vh;}
+.formato-info{padding:2.5rem 3rem;display:flex;flex-direction:column;justify-content:center;}
 .fmt-badge{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
 .fmt-badge::before{content:'';display:block;width:16px;height:1px;background:var(--accent);}
 .fmt-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:var(--text);line-height:1.1;margin-bottom:0.5rem;}
@@ -200,44 +211,54 @@ nav{
 }
 
 /* ── CASES ── */
-#cases{padding:7rem 0 0;background:var(--bg);}
-.cases-header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:4rem;gap:1.5rem;padding:0 3rem;}
+#cases{padding:5rem 3rem 0;background:var(--bg);}
+.cases-header{
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;margin-bottom:4rem;gap:1.25rem;
+  min-height:35vh;justify-content:center;
+}
 .cases-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;}
 .cases-title em{font-style:italic;color:var(--accent);}
-.cases-quote{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--muted);line-height:1.6;font-weight:300;text-align:center;border:none;padding:0;max-width:520px;}
+.cases-quote{
+  font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;
+  color:var(--muted);line-height:1.6;font-weight:300;
+  text-align:left;border:none;padding:0;max-width:480px;
+}
 
 .case-card{
-  display:grid;grid-template-columns:55fr 45fr;gap:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
   background:var(--white);border:none;
-  border-radius:0;overflow:hidden;margin-bottom:0;
-  min-height:100vh;
-  transition:none;
+  border-radius:var(--radius-md);overflow:hidden;margin-bottom:3rem;
+  transition:transform .3s;
+  box-shadow:0 8px 40px rgba(0,0,0,0.08);
 }
-.case-card:hover{border-color:transparent;transform:none;}
+.case-card:hover{transform:translateY(-3px);}
 .case-card.reverse{direction:rtl;}
 .case-card.reverse>*{direction:ltr;}
 
 .case-visual{
-  background:var(--bg-dark);
+  position:relative;
   display:flex;align-items:center;justify-content:center;
-  padding:2rem 1rem;min-height:100vh;position:relative;
+  padding:2.5rem 1.5rem;min-height:500px;
+  background:var(--bg-dark);
+  overflow:hidden;
 }
-.case-phones-stack{position:relative;width:100%;height:85vh;display:flex;align-items:center;justify-content:center;}
+.case-phones-stack{position:relative;width:100%;height:440px;display:flex;align-items:center;justify-content:center;z-index:2;}
 .case-phone{
   position:absolute;
-  border-radius:28px;overflow:hidden;
-  border:0.5px solid rgba(255,255,255,0.12);
-  width:min(260px, 36vh);aspect-ratio:9/16;
+  border-radius:24px;overflow:hidden;
+  border:0.5px solid rgba(255,255,255,0.15);
+  width:175px;aspect-ratio:9/16;
   display:flex;flex-direction:column;
   align-items:flex-start;justify-content:flex-end;
   padding:10px;
-  box-shadow:0 28px 80px rgba(0,0,0,0.65);
+  box-shadow:0 28px 75px rgba(0,0,0,0.65),0 0 0 1px rgba(255,255,255,0.04);
 }
-.case-phone:first-child{transform:rotate(-5deg) translateX(-75px) translateY(16px);z-index:1;}
-.case-phone:last-child{transform:rotate(4deg) translateX(65px) translateY(-16px);z-index:2;}
+.case-phone:first-child{transform:rotate(-5deg) translateX(-60px) translateY(12px);z-index:1;}
+.case-phone:last-child{transform:rotate(4deg) translateX(52px) translateY(-12px);z-index:2;}
 .case-phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 
-.case-info{padding:4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;min-height:100vh;}
+.case-info{padding:2.5rem 3rem;display:flex;flex-direction:column;justify-content:center;}
 .case-seg{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:.75rem;}
 .case-seg::before{content:'';display:block;width:16px;height:1px;background:var(--accent);}
 .case-brand{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--text);line-height:1;margin-bottom:.5rem;}
@@ -342,16 +363,12 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
 @media(max-width:900px){
   nav{padding:1rem 1.5rem;}
   .nav-links,.nav-cta{display:none;}
-  #hero,#sobre,#processo,#servicos,#formatos,#diferenciais,#experiencia,#contato{padding:4.5rem 1.5rem;}
-  .cases-header{padding:0 1.5rem;}
+  #hero,#sobre,#processo,#servicos,#formatos,.formato-block,#cases,#diferenciais,#experiencia,#contato{padding:4.5rem 1.5rem;}
   .sobre-grid,.form-intro-grid{grid-template-columns:1fr;}
   .steps,.dif-grid{grid-template-columns:1fr 1fr;}
   .serv-grid{grid-template-columns:1fr;}
-  .case-card,.formato-card{grid-template-columns:1fr;min-height:auto;}
+  .case-card,.formato-card{grid-template-columns:1fr;}
   .case-card.reverse,.formato-card.reverse{direction:ltr;}
-  .case-visual,.formato-visual{min-height:60vw;}
-  .phones-stack,.case-phones-stack{height:55vw;}
-  .case-info,.formato-info{min-height:auto;padding:2.5rem 1.5rem;}
   footer{flex-direction:column;gap:.5rem;text-align:center;}
 }
 @media(max-width:600px){
@@ -468,11 +485,9 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
 <!-- FORMATOS INTRO -->
 <section id="formatos">
   <div class="sec-label reveal">Formatos de conteúdo</div>
+  <h2 class="form-title reveal" style="margin-top:0.5rem;">O seu conteúdo,<br>no formato <em>adequado.</em></h2>
   <div class="form-intro-grid">
-    <div>
-      <h2 class="form-title reveal">O seu conteúdo,<br>no formato <em>adequado.</em></h2>
-      <p class="form-desc reveal">Cada formato tem um papel estratégico — e saber usá-los juntos é o que faz uma presença digital funcionar de verdade. Não publico por publicar: cada peça tem intenção, objetivo e lugar no plano.</p>
-    </div>
+    <p class="form-desc reveal">Cada formato tem um papel estratégico — e saber usá-los juntos é o que faz uma presença digital funcionar de verdade. Não publico por publicar: cada peça tem intenção, objetivo e lugar no plano.</p>
     <blockquote class="form-quote reveal">"O conteúdo certo, no formato certo, para o objetivo certo."</blockquote>
   </div>
 </section>
@@ -481,6 +496,7 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
 <div class="formato-block">
   <div class="formato-card reveal">
     <div class="formato-visual">
+      <!-- Inserir vídeo: videos/story-mockup.mp4 -->
       <div class="phones-stack">
         <div class="phone-wrap bg-story">
           <img src="videos/story-1.png" alt="Exemplo de Story" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
@@ -637,6 +653,28 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
       <p class="case-tagline">Ambientes que contam histórias</p>
       <p class="case-desc">Gestão de redes sociais e direção de vídeos para um escritório de arquitetura que transforma espaços em experiências. Linguagem sofisticada e cuidadosa que valoriza a estética dos ambientes.</p>
       <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Criação de Conteúdo</span><span class="tag">Stories</span><span class="tag">Direção de vídeo</span><span class="tag">Social Media</span></div>
+    </div>
+  </div>
+
+  <!-- TIGUS MÓVEIS -->
+  <div class="case-card reveal">
+    <div class="case-visual">
+      <!-- Inserir: videos/tigus-moveis.mp4 -->
+      <div class="case-phones-stack">
+        <div class="case-phone bg-tigus">
+        <video src="videos/tigus-moveis.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+        <div class="case-phone bg-tigus" style="background:#0d2240;">
+        <video src="videos/tigus-moveis-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="case-seg">Varejo · Móveis</div>
+      <h2 class="case-brand">Tigus Móveis</h2>
+      <p class="case-tagline">Do lançamento de produto ao conteúdo viral</p>
+      <p class="case-desc">Gestão de redes sociais e criação de conteúdo — do lançamento de produtos a vídeos em trend adaptados para o segmento de móveis. Conteúdo que gera identificação, desejo e tráfego para a loja.</p>
+      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Criação de Conteúdo</span><span class="tag">Social Media</span><span class="tag">Stories</span><span class="tag">Atendimento publicitário</span></div>
     </div>
   </div>
 
@@ -799,7 +837,7 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
 </footer>
 
 <script>
-// Intersection Observer para animações de entrada
+// Intersection Observer — reveal animations
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -810,64 +848,41 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Marquee: drag to scroll left/right, auto-resumes when mouse leaves
+// Gold line reveal on sec-labels
+const lineObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('line-ready'), 100);
+      lineObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.sec-label').forEach(el => lineObserver.observe(el));
+
+// Marquee: drag to scroll left/right
 (function() {
   const wrap = document.querySelector('.marquee-wrap');
   const track = document.querySelector('.marquee-track');
   if (!wrap || !track) return;
-
-  let isDragging = false;
-  let startX = 0;
-  let scrollLeft = 0;
-  let currentOffset = 0;
-  let animFrame;
-  const speed = 0.4; // px per frame (slow)
-
-  // Auto-scroll via requestAnimationFrame
+  let isDragging = false, startX = 0, scrollLeft = 0, currentOffset = 0;
+  const speed = 0.4;
   function autoScroll() {
     if (!isDragging) {
       currentOffset -= speed;
-      // Reset when first half scrolled through (50%)
       const totalW = track.scrollWidth / 2;
       if (Math.abs(currentOffset) >= totalW) currentOffset = 0;
       track.style.transform = `translateX(${currentOffset}px)`;
     }
-    animFrame = requestAnimationFrame(autoScroll);
+    requestAnimationFrame(autoScroll);
   }
-  // Remove CSS animation, use JS instead
   track.style.animation = 'none';
   autoScroll();
-
-  wrap.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    wrap.classList.add('dragging', 'paused');
-    startX = e.pageX;
-    scrollLeft = currentOffset;
-  });
-  window.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    const dx = e.pageX - startX;
-    currentOffset = scrollLeft + dx;
-    track.style.transform = `translateX(${currentOffset}px)`;
-  });
-  window.addEventListener('mouseup', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    wrap.classList.remove('dragging', 'paused');
-  });
-  // Touch support
-  wrap.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    startX = e.touches[0].pageX;
-    scrollLeft = currentOffset;
-  }, {passive:true});
-  wrap.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const dx = e.touches[0].pageX - startX;
-    currentOffset = scrollLeft + dx;
-    track.style.transform = `translateX(${currentOffset}px)`;
-  }, {passive:true});
-  wrap.addEventListener('touchend', () => { isDragging = false; });
+  wrap.addEventListener('mousedown', (e) => { isDragging=true; wrap.classList.add('dragging','paused'); startX=e.pageX; scrollLeft=currentOffset; });
+  window.addEventListener('mousemove', (e) => { if(!isDragging) return; currentOffset=scrollLeft+(e.pageX-startX); track.style.transform=`translateX(${currentOffset}px)`; });
+  window.addEventListener('mouseup', () => { if(!isDragging) return; isDragging=false; wrap.classList.remove('dragging','paused'); });
+  wrap.addEventListener('touchstart', (e) => { isDragging=true; startX=e.touches[0].pageX; scrollLeft=currentOffset; }, {passive:true});
+  wrap.addEventListener('touchmove', (e) => { if(!isDragging) return; currentOffset=scrollLeft+(e.touches[0].pageX-startX); track.style.transform=`translateX(${currentOffset}px)`; }, {passive:true});
+  wrap.addEventListener('touchend', () => { isDragging=false; });
 })();
 </script>
 
