@@ -412,8 +412,45 @@ footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
   .hero-bg{font-size:40vw;}
 }
 /* clickable phones */
-.case-phone,.phone-wrap{cursor:pointer;}
-.case-phone:hover,.phone-wrap:hover{opacity:0.92;}
+.case-phone,.phone-wrap{cursor:pointer;position:relative;}
+
+/* hover overlay escuro com ícone expand */
+.case-phone::after,.phone-wrap::after{
+  content:'⤢';
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;color:rgba(255,255,255,0);
+  border-radius:inherit;
+  transition:background .25s ease, color .25s ease;
+  pointer-events:none;
+  z-index:3;
+}
+.case-phone:hover::after,.phone-wrap:hover::after{
+  background:rgba(0,0,0,0.35);
+  color:rgba(255,255,255,0.9);
+}
+
+/* mãozinha pulsante abaixo do mockup */
+.phone-cursor-hint{
+  position:absolute;
+  bottom:-32px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:20px;
+  animation:cursorPulse 1.8s ease-in-out infinite;
+  pointer-events:none;
+  z-index:4;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+@keyframes cursorPulse{
+  0%{transform:translateX(-50%) translateY(0);opacity:0.9;}
+  50%{transform:translateX(-50%) translateY(-5px);opacity:0.5;}
+  100%{transform:translateX(-50%) translateY(0);opacity:0.9;}
+}
+
+/* container dos phones precisa de overflow visible pra mãozinha aparecer */
+.phones-stack,.case-phones-stack{overflow:visible;}
 .video-lightbox{
   position:fixed;inset:0;z-index:1000;
   display:flex;align-items:center;justify-content:center;
@@ -1038,6 +1075,21 @@ document.querySelectorAll('.phone-wrap img').forEach(img => {
   if (!src) return;
   const wrapper = img.closest('.phone-wrap');
   if (wrapper) wrapper.addEventListener('click', () => openImageLightbox(src));
+});
+
+// Add pulsing hand cursor hint below each phones stack
+const handSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M18 11V8a2 2 0 0 0-4 0v3"/>
+  <path d="M14 10V6a2 2 0 0 0-4 0v4"/>
+  <path d="M10 10V5a2 2 0 0 0-4 0v9l-1-1a2 2 0 0 0-2.73.73l3.22 4.72A5 5 0 0 0 9.78 21h4.44A5 5 0 0 0 19 16v-5a2 2 0 0 0-4 0"/>
+</svg>`;
+
+document.querySelectorAll('.phones-stack, .case-phones-stack').forEach(stack => {
+  const hint = document.createElement('div');
+  hint.className = 'phone-cursor-hint';
+  hint.innerHTML = handSVG;
+  hint.setAttribute('aria-hidden', 'true');
+  stack.appendChild(hint);
 });
 
 // Close video lightbox
