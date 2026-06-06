@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANC Serviços · Ana Carolina Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1ea;
+  --bg-soft: #ebe4d8;
+  --bg-dark: #2a1a10;
+  --text: #24110d;
+  --muted: #7a6a5f;
+  --accent: #b8894d;
+  --accent-light: #f0e4cc;
+  --white: #fffaf3;
+  --border: rgba(184,137,77,0.25);
+  --radius-sm: 8px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 3rem;
+  background:rgba(245,241,234,0.94);
+  border-bottom:0.5px solid var(--border);
+  backdrop-filter:blur(14px);
+}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--text);letter-spacing:0.02em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:400;transition:color .2s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-cta{display:none;}
+
+/* ── SECTION LABEL ── */
+.sec-label{
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--accent);font-weight:400;margin-bottom:1rem;
+}
+.sec-label::before{content:'';display:block;width:28px;height:1px;background:var(--accent);}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:8rem 3rem 4rem;position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;right:-3rem;top:50%;transform:translateY(-50%);
+  font-family:'Cormorant Garamond',serif;font-size:24vw;font-weight:300;
+  color:rgba(184,137,77,0.07);line-height:1;
+  pointer-events:none;user-select:none;letter-spacing:-0.04em;
+}
+.hero-deco{display:none;}
+.hero-deco2{display:none;}
+.hero-content{max-width:680px;position:relative;}
+.hero-eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);font-weight:400;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--accent);}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,8vw,96px);font-weight:300;line-height:1;color:var(--text);letter-spacing:-0.02em;}
+.hero-name-italic{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,8vw,96px);font-weight:300;font-style:italic;color:var(--accent);line-height:1;letter-spacing:-0.02em;display:block;margin-bottom:1.5rem;}
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.8;max-width:480px;margin-bottom:2rem;font-weight:300;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem;}
+.pill{font-size:12px;color:var(--muted);border:0.5px solid rgba(122,106,95,0.4);padding:7px 16px;border-radius:20px;background:var(--white);letter-spacing:0.02em;}
+.hero-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--white);background:var(--accent);
+  padding:16px 32px;border-radius:var(--radius-sm);
+  text-decoration:none;font-weight:500;
+  transition:background .2s, transform .2s;
+}
+.hero-btn:hover{background:#9a7038;transform:translateY(-1px);}
+
+/* ── SOBRE ── */
+#sobre{padding:7rem 3rem;background:var(--white);}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:3rem;}
+.sobre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;margin-bottom:2rem;}
+.sobre-title em{font-style:italic;color:var(--accent);}
+.sobre-text p{font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:1.25rem;}
+.sobre-quote{
+  font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;
+  color:var(--muted);line-height:1.6;font-weight:300;
+  border-left:2px solid var(--accent);padding-left:1.5rem;margin-top:2rem;
+}
+.sobre-stats{display:flex;flex-direction:column;gap:1.25rem;}
+.stat-card{
+  background:var(--bg);border:0.5px solid var(--border);
+  padding:1.75rem 2rem;border-radius:var(--radius-sm);
+  transition:background .25s, box-shadow .25s;cursor:default;
+}
+.stat-card:hover{background:var(--white);box-shadow:0 4px 24px rgba(184,137,77,0.1);}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--accent);line-height:1;margin-bottom:0.25rem;}
+.stat-lbl{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:400;}
+
+/* ── PROCESSO ── */
+#processo{padding:7rem 3rem;background:var(--bg-dark);}
+#processo .sec-label{color:#d4aa70;}
+#processo .sec-label::before{background:#d4aa70;}
+.proc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:#fff;line-height:1.1;margin-bottom:0.75rem;}
+.proc-title em{font-style:italic;color:#d4aa70;}
+.proc-sub{font-size:14px;color:rgba(255,255,255,0.4);font-weight:300;margin-bottom:3.5rem;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);}
+.step{background:var(--bg-dark);padding:2.5rem 2rem;transition:background .2s;display:flex;flex-direction:column;}
+.step:hover{background:#381f12;}
+.step-num{display:none;}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:#fff;margin-bottom:0.75rem;line-height:1.2;min-height:52px;display:flex;align-items:flex-start;gap:0.25em;flex-wrap:wrap;}
+.step-title em{font-style:italic;color:#d4aa70;}
+.step-text{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.75;font-weight:300;}
+
+/* ── SERVIÇOS ── */
+#servicos{padding:7rem 3rem;background:var(--bg);}
+.serv-header{margin-bottom:3rem;}
+.serv-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;margin-top:0.5rem;}
+.serv-title em{font-style:italic;color:var(--accent);}
+.serv-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:0.5px solid var(--border);}
+.serv-card{background:var(--bg);padding:2.5rem;transition:background .2s;}
+.serv-card:hover{background:var(--white);}
+.serv-icon{width:42px;height:42px;border:0.5px solid var(--border);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;color:var(--accent);}
+.serv-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--text);margin-bottom:0.75rem;}
+.serv-text{font-size:13px;color:var(--muted);line-height:1.8;font-weight:300;}
+
+/* ── FORMATOS INTRO ── */
+#formatos{padding:7rem 3rem;background:var(--white);}
+.form-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-top:2rem;}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;}
+.form-title em{font-style:italic;color:var(--accent);}
+.form-desc{font-size:15px;color:var(--muted);line-height:1.8;font-weight:300;margin-top:1.25rem;}
+.form-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--muted);line-height:1.55;font-weight:300;border-left:2px solid var(--accent);padding-left:1.75rem;align-self:flex-end;}
+
+/* ── FORMATO CARDS ── */
+.formato-block{padding:0 3rem 5rem;}
+.formato-card{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  background:var(--white);border:0.5px solid var(--border);
+  border-radius:var(--radius-sm);overflow:hidden;margin-bottom:1.5rem;
+  transition:border-color .2s;
+}
+.formato-card:hover{border-color:var(--accent);}
+.formato-card.reverse{direction:rtl;}
+.formato-card.reverse>*{direction:ltr;}
+.formato-visual{
+  background:var(--bg-dark);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem 1rem;gap:0;min-height:560px;position:relative;
+}
+.phones-stack{position:relative;width:100%;height:520px;display:flex;align-items:center;justify-content:center;}
+.phone-wrap{
+  position:absolute;
+  border-radius:26px;overflow:hidden;
+  border:0.5px solid rgba(255,255,255,0.12);
+  width:220px;aspect-ratio:9/16;
+  display:flex;flex-direction:column;
+  align-items:flex-start;justify-content:flex-end;
+  padding:10px;
+  box-shadow:0 28px 80px rgba(0,0,0,0.6);
+}
+.phone-wrap:first-child{transform:rotate(-7deg) translateX(-70px) translateY(16px);z-index:1;}
+.phone-wrap:last-child{transform:rotate(4deg) translateX(60px) translateY(-16px);z-index:2;}
+.phone-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:rgba(255,255,255,0.9);
+}
+.phone-cap{font-size:9px;font-weight:600;color:rgba(255,255,255,0.9);line-height:1.35;position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,0.8);}
+.phone-sub{font-size:8px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.phone-brand{position:absolute;bottom:7px;right:8px;font-size:7px;letter-spacing:.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;}
+
+/* ── video placeholder ── */
+.video-placeholder{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.03);
+  font-size:9px;color:rgba(255,255,255,0.25);
+  letter-spacing:0.08em;text-transform:uppercase;text-align:center;
+  padding:.75rem;line-height:1.6;
+}
+.video-placeholder span{font-size:18px;display:block;margin-bottom:6px;opacity:0.35;}
+
+.formato-info{padding:2.5rem 3rem;display:flex;flex-direction:column;justify-content:center;}
+.fmt-badge{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.fmt-badge::before{content:'';display:block;width:16px;height:1px;background:var(--accent);}
+.fmt-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:var(--text);line-height:1.1;margin-bottom:0.5rem;}
+.fmt-tagline{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--accent);margin-bottom:1.25rem;}
+.fmt-desc{font-size:13px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:1.5rem;}
+.fmt-ideal{
+  background:var(--accent-light);border-left:2px solid var(--accent);
+  padding:0.875rem 1.125rem;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:12px;color:#7a5830;font-style:italic;line-height:1.65;
+}
+
+/* ── CASES ── */
+#cases{padding:7rem 3rem;background:var(--bg);}
+.cases-header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:4rem;gap:1.5rem;}
+.cases-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;}
+.cases-title em{font-style:italic;color:var(--accent);}
+.cases-quote{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--muted);line-height:1.6;font-weight:300;text-align:center;border:none;padding:0;max-width:520px;}
+
+.case-card{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  background:var(--white);border:0.5px solid var(--border);
+  border-radius:var(--radius-sm);overflow:hidden;margin-bottom:1.5rem;
+  transition:border-color .2s, transform .2s;
+}
+.case-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.case-card.reverse{direction:rtl;}
+.case-card.reverse>*{direction:ltr;}
+
+.case-visual{
+  background:var(--bg-dark);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem 1rem;min-height:520px;position:relative;
+}
+.case-phones-stack{position:relative;width:100%;height:480px;display:flex;align-items:center;justify-content:center;}
+.case-phone{
+  position:absolute;
+  border-radius:24px;overflow:hidden;
+  border:0.5px solid rgba(255,255,255,0.12);
+  width:200px;aspect-ratio:9/16;
+  display:flex;flex-direction:column;
+  align-items:flex-start;justify-content:flex-end;
+  padding:10px;
+  box-shadow:0 24px 70px rgba(0,0,0,0.6);
+}
+.case-phone:first-child{transform:rotate(-5deg) translateX(-65px) translateY(12px);z-index:1;}
+.case-phone:last-child{transform:rotate(4deg) translateX(55px) translateY(-12px);z-index:2;}
+.case-phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+
+.case-info{padding:2.5rem 3rem;display:flex;flex-direction:column;justify-content:center;}
+.case-seg{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:.75rem;}
+.case-seg::before{content:'';display:block;width:16px;height:1px;background:var(--accent);}
+.case-brand{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;color:var(--text);line-height:1;margin-bottom:.5rem;}
+.case-tagline{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--accent);margin-bottom:1.25rem;}
+.case-desc{font-size:13px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:1.5rem;}
+.case-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.tag{font-size:11px;color:var(--muted);border:0.5px solid rgba(122,106,95,0.4);padding:5px 13px;border-radius:20px;letter-spacing:0.02em;}
+
+/* phone bg colors */
+.bg-marina{background:#1a1008;}
+.bg-nic{background:#0d1520;}
+.bg-zanzar{background:#180808;}
+.bg-voll{background:#3d3028;}
+.bg-tigus{background:#0a1830;}
+.bg-strong{background:#1a1400;}
+.bg-mel{background:#1a1208;}
+.bg-story{background:#1a1f2e;}
+.bg-ads{background:#180d0d;}
+.bg-viral{background:#101808;}
+
+/* ── DIFERENCIAIS ── */
+#diferenciais{padding:7rem 3rem;background:var(--white);}
+.dif-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;margin-top:.5rem;}
+.dif-title em{font-style:italic;color:var(--accent);}
+.dif-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:3rem;border:0.5px solid var(--border);}
+.dif-card{background:var(--white);padding:2rem 1.75rem;}
+.dif-card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--text);margin-bottom:.75rem;line-height:1.2;}
+.dif-card-title em{font-style:italic;color:var(--accent);}
+.dif-card-text{font-size:13px;color:var(--muted);line-height:1.75;font-weight:300;}
+
+/* ── EXPERIÊNCIA ── */
+#experiencia{padding:7rem 3rem;background:var(--bg);}
+.exp-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--text);line-height:1.1;margin-top:.5rem;}
+.exp-title em{font-style:italic;color:var(--accent);}
+.exp-sub{font-size:14px;color:var(--muted);font-weight:300;margin-top:.75rem;margin-bottom:2.5rem;}
+
+/* marquee */
+.marquee-wrap{overflow:hidden;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:.875rem 0;cursor:grab;user-select:none;}
+.marquee-wrap.dragging{cursor:grabbing;}
+.marquee-track{display:flex;gap:2.5rem;animation:marquee 55s linear infinite;width:max-content;}
+.marquee-wrap.paused .marquee-track{animation-play-state:paused;}
+.marquee-item{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;font-weight:400;}
+.marquee-dot{color:var(--accent);margin:0 .25rem;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── CTA / CONTATO ── */
+#contato{padding:7rem 3rem;background:var(--bg-dark);text-align:center;}
+.cta-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#d4aa70;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:14px;}
+.cta-label::before,.cta-label::after{content:'';display:block;width:28px;height:1px;background:#d4aa70;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,68px);font-weight:300;color:#fff;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em;}
+.cta-title em{font-style:italic;color:#d4aa70;}
+.cta-sub{font-size:15px;color:rgba(255,255,255,.4);font-weight:300;max-width:480px;margin:0 auto 3rem;line-height:1.75;}
+.cta-main-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text);background:#d4aa70;
+  padding:18px 36px;border-radius:var(--radius-sm);
+  text-decoration:none;font-weight:500;margin-bottom:2rem;
+  transition:background .2s,transform .2s;
+}
+.cta-main-btn:hover{background:#b8894d;transform:translateY(-2px);}
+.cta-contacts{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;}
+.cta-link{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:rgba(255,255,255,.6);
+  background:rgba(255,255,255,.05);
+  border:0.5px solid rgba(255,255,255,.12);
+  padding:12px 22px;border-radius:var(--radius-sm);
+  text-decoration:none;transition:all .2s;
+}
+.cta-link:hover{background:rgba(212,170,112,.15);color:#fff;border-color:#d4aa70;}
+.cta-link svg{flex-shrink:0;}
+
+/* ── FOOTER ── */
+footer{background:var(--bg-dark);border-top:0.5px solid rgba(255,255,255,.06);padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+footer p{font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;}
+
+/* ── WHATSAPP FLOAT ── */
+.wa-float{
+  position:fixed;bottom:1.75rem;right:1.75rem;z-index:200;
+  width:42px;height:42px;border-radius:50%;
+  background:#25D366;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 14px rgba(37,211,102,.35);
+  text-decoration:none;transition:transform .2s,box-shadow .2s;
+}
+.wa-float:hover{transform:scale(1.08);box-shadow:0 5px 22px rgba(37,211,102,.5);}
+
+/* ── ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.hero-content>*{animation:fadeUp .7s ease forwards;opacity:0;}
+.hero-eyebrow{animation-delay:.1s;}
+.hero-name{animation-delay:.2s;}
+.hero-name-italic{animation-delay:.25s;}
+.hero-desc{animation-delay:.35s;}
+.hero-pills{animation-delay:.45s;}
+.hero-btn{animation-delay:.55s;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links,.nav-cta{display:none;}
+  #hero,#sobre,#processo,#servicos,#formatos,.formato-block,#cases,#diferenciais,#experiencia,#contato{padding:4.5rem 1.5rem;}
+  .sobre-grid,.form-intro-grid{grid-template-columns:1fr;}
+  .steps,.dif-grid{grid-template-columns:1fr 1fr;}
+  .serv-grid{grid-template-columns:1fr;}
+  .case-card,.formato-card{grid-template-columns:1fr;}
+  .case-card.reverse,.formato-card.reverse{direction:ltr;}
+  footer{flex-direction:column;gap:.5rem;text-align:center;}
+}
+@media(max-width:600px){
+  .steps,.dif-grid{grid-template-columns:1fr;}
+  .hero-bg{font-size:40vw;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ANC <span>Serviços</span></div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#formatos">Formatos</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/31998372929" class="nav-cta" target="_blank" rel="noopener noreferrer" aria-label="Contato via WhatsApp">Contato</a>
+</nav>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/31998372929" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Fale pelo WhatsApp">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.845L0 24l6.335-1.508A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.653-.51-5.173-1.395l-.371-.22-3.762.895.952-3.668-.242-.378A9.968 9.968 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" aria-hidden="true">ANC</div>
+  <div class="hero-deco" aria-hidden="true"></div>
+  <div class="hero-deco2" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Portfólio Criativo · 2026</p>
+    <div class="hero-name">Ana Carolina</div>
+    <span class="hero-name-italic">Santiago</span>
+    <p class="hero-desc">Formada em Administração com MBA em Marketing, Criatividade e Inovação. Construo posicionamentos digitais com estratégia, intenção e conexão real.</p>
+    <div class="hero-pills">
+      <span class="pill">Social Media</span>
+      <span class="pill">Atendimento Publicitário</span>
+      <span class="pill">Criação de Conteúdo</span>
+      <span class="pill">Direção de Vídeo</span>
+    </div>
+    <a href="https://wa.me/31998372929" class="hero-btn" target="_blank" rel="noopener noreferrer" aria-label="Entre em contato via WhatsApp">
+      Vamos trabalhar juntos →
+    </a>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sec-label reveal">Sobre</div>
+  <div class="sobre-grid">
+    <div>
+      <h2 class="sobre-title reveal">Uma profissional que entende de <em>pessoas</em> antes de entender de redes</h2>
+      <div class="sobre-text reveal">
+        <p>Comecei no atendimento ao cliente — lidando com perfis diferentes, aprendendo a escutar e a adaptar a comunicação. Essa experiência mudou a forma como enxergo o marketing: não como um conjunto de publicações, mas como uma conversa contínua entre marca e público.</p>
+        <p>Hoje gerencio redes sociais, crio conteúdo e atendo contas de publicidade com foco em resultado e coerência de marca. Trabalho com organização, visão estratégica e cuidado com cada detalhe.</p>
+        <blockquote class="sobre-quote">"Marketing bem-feito não depende de sorte algorítmica. Depende de estratégia, clareza e da comunicação com autenticidade."</blockquote>
+      </div>
+    </div>
+    <div class="sobre-stats reveal">
+      <div class="stat-card"><div class="stat-num">15+</div><div class="stat-lbl">Marcas atendidas</div></div>
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-lbl">Frentes de atuação</div></div>
+      <div class="stat-card"><div class="stat-num">MBA</div><div class="stat-lbl">Marketing, Criatividade e Inovação</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section id="processo">
+  <div class="sec-label reveal">Como trabalho</div>
+  <h2 class="proc-title reveal">Um processo pensado para<br>gerar <em>resultado real</em></h2>
+  <p class="proc-sub reveal">Cada projeto começa com escuta ativa. Só depois vem a estratégia — e então a execução.</p>
+  <div class="steps reveal">
+    <div class="step"><h3 class="step-title">Imersão e <em>diagnóstico</em></h3><p class="step-text">Estudo a fundo a marca, o público e os objetivos. O briefing não é uma formalidade — é o alicerce de tudo.</p></div>
+    <div class="step"><h3 class="step-title">Direcionamento <em>estratégico</em></h3><p class="step-text">Defino posicionamento, linha editorial e direcionamento criativo com coerência e propósito comunicacional.</p></div>
+    <div class="step"><h3 class="step-title">Produção de <em>conteúdo</em></h3><p class="step-text">Desenvolvo conteúdos pensados para clareza, consistência e conexão genuína com o público da marca.</p></div>
+    <div class="step"><h3 class="step-title">Acompanhamento e ajuste</h3><p class="step-text">Monitoro resultados e faço ajustes contínuos para manter performance e posicionamento alinhados.</p></div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="serv-header">
+    <div class="sec-label reveal">Serviços</div>
+    <h2 class="serv-title reveal">O que posso fazer<br>pela sua <em>marca</em></h2>
+  </div>
+  <div class="serv-grid reveal">
+    <div class="serv-card">
+      <div class="serv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+      <h3 class="serv-name">Gestão de Redes Sociais</h3>
+      <p class="serv-text">Planejamento editorial, criação de conteúdo, publicação, monitoramento de pauta e análise de métricas — tudo com foco em posicionamento e consistência.</p>
+    </div>
+    <div class="serv-card">
+      <div class="serv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+      <h3 class="serv-name">Direção de vídeos</h3>
+      <p class="serv-text">Roteiro, direção e acompanhamento de videomaker para Reels, vídeos institucionais e anúncios pagos. Cada segundo com propósito definido.</p>
+    </div>
+    <div class="serv-card">
+      <div class="serv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <h3 class="serv-name">Atendimento publicitário</h3>
+      <p class="serv-text">Gestão do relacionamento entre cliente e agência: briefing, aprovação de materiais e alinhamento estratégico contínuo.</p>
+    </div>
+    <div class="serv-card">
+      <div class="serv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <h3 class="serv-name">Criação de conteúdo</h3>
+      <p class="serv-text">Stories, Reels orgânicos, conteúdos em trend e anúncios curtos — cada peça criada com intenção e alinhada à voz da marca.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATOS INTRO -->
+<section id="formatos">
+  <div class="sec-label reveal">Formatos de conteúdo</div>
+  <div class="form-intro-grid">
+    <div>
+      <h2 class="form-title reveal">O seu conteúdo,<br>no formato <em>adequado.</em></h2>
+      <p class="form-desc reveal">Cada formato tem um papel estratégico — e saber usá-los juntos é o que faz uma presença digital funcionar de verdade. Não publico por publicar: cada peça tem intenção, objetivo e lugar no plano.</p>
+    </div>
+    <blockquote class="form-quote reveal">"O conteúdo certo, no formato certo, para o objetivo certo."</blockquote>
+  </div>
+</section>
+
+<!-- FORMATO: STORY -->
+<div class="formato-block">
+  <div class="formato-card reveal">
+    <div class="formato-visual">
+      <div class="phones-stack">
+        <div class="phone-wrap bg-story">
+          <img src="videos/story-1.png" alt="Exemplo de Story" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="phone-wrap bg-story" style="background:#1a2a1a;">
+          <img src="videos/story-2.png" alt="Exemplo de Story" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        </div>
+      </div>
+    </div>
+    <div class="formato-info">
+      <div class="fmt-badge">Formato</div>
+      <h2 class="fmt-title">Story</h2>
+      <p class="fmt-tagline">Presença diária sem esforço excessivo</p>
+      <p class="fmt-desc">Stories são publicações verticais e temporárias que somem em 24 horas — e é exatamente isso que os torna poderosos. Criam senso de urgência, aproximam a marca do público de forma autêntica e mantêm presença diária sem precisar de um post elaborado.</p>
+      <div class="fmt-ideal"><em>Ideal para: promoções rápidas, bastidores, enquetes, depoimentos e conteúdo de relacionamento diário.</em></div>
+    </div>
+  </div>
+
+  <!-- FORMATO: ADS -->
+  <div class="formato-card reverse reveal">
+    <div class="formato-visual">
+      <!-- Inserir vídeos: videos/ads-mockup.mp4 -->
+      <div class="phones-stack">
+        <div class="phone-wrap bg-ads">
+          <video src="videos/ads-1.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+        </div>
+        <div class="phone-wrap bg-ads" style="background:#200d08;">
+          <video src="videos/ads-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+        </div>
+      </div>
+    </div>
+    <div class="formato-info">
+      <div class="fmt-badge">Formato</div>
+      <h2 class="fmt-title">Vídeos curtos — Ads</h2>
+      <p class="fmt-tagline">Transformando visualizações em clientes</p>
+      <p class="fmt-desc">Anúncios pagos criados para parar o scroll e converter. Diferente de posts orgânicos, cada segundo tem um propósito: do gancho inicial até o call to action. O resultado é uma comunicação que não depende de algoritmo, chega no público certo e gera retorno mensurável.</p>
+      <div class="fmt-ideal"><em>Ideal para: lançamentos, promoções, captação de leads e geração de tráfego qualificado.</em></div>
+    </div>
+  </div>
+
+  <!-- FORMATO: VIRAIS -->
+  <div class="formato-card reveal">
+    <div class="formato-visual">
+      <!-- Inserir vídeos: videos/virais-mockup.mp4 -->
+      <div class="phones-stack">
+        <div class="phone-wrap bg-viral">
+          <video src="videos/virais-1.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+        </div>
+        <div class="phone-wrap bg-viral" style="background:#181210;">
+          <video src="videos/virais-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+        </div>
+      </div>
+    </div>
+    <div class="formato-info">
+      <div class="fmt-badge">Formato</div>
+      <h2 class="fmt-title">Vídeos curtos — Virais</h2>
+      <p class="fmt-tagline">Alcance orgânico em escala</p>
+      <p class="fmt-desc">Conteúdos criados a partir de tendências do momento — áudios, formatos e desafios que já estão em alta. Ao surfar essas ondas, a marca aparece de forma natural e espontânea, aumentando o alcance orgânico sem precisar investir em anúncios.</p>
+      <div class="fmt-ideal"><em>Ideal para: crescimento de seguidores, awareness de marca e engajamento orgânico acelerado.</em></div>
+    </div>
+  </div>
+</div>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="cases-header reveal">
+    <div class="sec-label" style="justify-content:center;">Cases selecionados</div>
+    <h2 class="cases-title">Trabalhos que falam por <em>si</em></h2>
+    <blockquote class="cases-quote">"Cada marca tem uma história. O meu trabalho é ajudá-la a contar a certa."</blockquote>
+  </div>
+
+  <!-- MARINA GRILL -->
+  <div class="case-card reveal">
+    <div class="case-visual">
+      <!-- Inserir: videos/marina-grill.mp4 e videos/marina-grill-2.mp4 -->
+      <div class="case-phones-stack">
+        <div class="case-phone bg-marina">
+        <video src="videos/marina-grill.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+        <div class="case-phone bg-marina" style="background:#120c04;">
+        <video src="videos/marina-grill-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="case-seg">Alimentação</div>
+      <h2 class="case-brand">Marina Grill</h2>
+      <p class="case-tagline">O restaurante que faz você salivar pela tela</p>
+      <p class="case-desc">Gestão de redes sociais, criação de conteúdo e direção de vídeos com foco em conteúdo orgânico que aproxima o restaurante do público local. Mistura estratégica de vídeos em trend, conteúdo real e pornfood.</p>
+      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Direção de vídeo</span><span class="tag">Criação de Conteúdo</span><span class="tag">Orgânico</span></div>
+    </div>
+  </div>
+
+  <!-- NIC COSMÉTICOS -->
+  <div class="case-card reverse reveal">
+    <div class="case-visual">
+      <!-- Inserir: videos/nic-cosmeticos.mp4 -->
+      <div class="case-phones-stack">
+        <div class="case-phone bg-nic">
+        <video src="videos/nic-cosmeticos.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+        <div class="case-phone bg-nic" style="background:#111a1a;">
+        <video src="videos/nic-cosmeticos-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="case-seg">Beleza e Cosméticos</div>
+      <h2 class="case-brand">NIC Cosméticos</h2>
+      <p class="case-tagline">Beleza acessível com comunicação de alto padrão</p>
+      <p class="case-desc">Gestão completa das redes, criação de conteúdo e stories alinhados ao universo da beleza e rotina de cuidados. Comunicação que equilibra informação sobre produtos com conteúdo de identificação e desejo.</p>
+      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Criação de Conteúdo</span><span class="tag">Stories</span><span class="tag">Atendimento publicitário</span><span class="tag">Social Media</span></div>
+    </div>
+  </div>
+
+  <!-- ZANZAR -->
+  <div class="case-card reveal">
+    <div class="case-visual">
+      <!-- Inserir: videos/zanzar.mp4 -->
+      <div class="case-phones-stack">
+        <div class="case-phone bg-zanzar">
+        <video src="videos/zanzar.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+        <div class="case-phone bg-zanzar" style="background:#0d0808;">
+        <video src="videos/zanzar-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="case-seg">Publicidade</div>
+      <h2 class="case-brand">Zanzar</h2>
+      <p class="case-tagline">Sua marca chega onde seu público vai</p>
+      <p class="case-desc">Gestão de redes sociais e criação de vídeos para uma empresa de mídia IDOOH. Linguagem chamativa e divulgação de parceiros para fortalecer a autoridade da marca.</p>
+      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Direção de vídeo</span><span class="tag">Criação de Conteúdo</span></div>
+    </div>
+  </div>
+
+  <!-- VOLL -->
+  <div class="case-card reverse reveal">
+    <div class="case-visual">
+      <!-- Inserir: videos/voll.mp4 -->
+      <div class="case-phones-stack">
+        <div class="case-phone bg-voll">
+        <video src="videos/voll.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+        <div class="case-phone bg-voll" style="background:#2e2420;">
+        <video src="videos/voll-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="case-seg">Arquitetura e Interiores</div>
+      <h2 class="case-brand">Voll</h2>
+      <p class="case-tagline">Ambientes que contam histórias</p>
+      <p class="case-desc">Gestão de redes sociais e direção de vídeos para um escritório de arquitetura que transforma espaços em experiências. Linguagem sofisticada e cuidadosa que valoriza a estética dos ambientes.</p>
+      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Criação de Conteúdo</span><span class="tag">Stories</span><span class="tag">Direção de vídeo</span><span class="tag">Social Media</span></div>
+    </div>
+  </div>
+
+  <!-- STRONG -->
+  <div class="case-card reverse reveal">
+    <div class="case-visual">
+      <!-- Inserir: videos/strong.mp4 -->
+      <div class="case-phones-stack">
+        <div class="case-phone bg-strong">
+        <video src="videos/strong.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+        <div class="case-phone bg-strong" style="background:#221c00;">
+        <video src="videos/strong-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="case-seg">Indústria</div>
+      <h2 class="case-brand">Strong</h2>
+      <p class="case-tagline">Comunicação técnica em linguagem humana</p>
+      <p class="case-desc">Criação de conteúdo e direção de vídeos para um segmento que raramente investe em presença digital. O desafio foi traduzir competência técnica em linguagem acessível, sem perder autoridade.</p>
+      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Criação de Conteúdo</span></div>
+    </div>
+  </div>
+
+  <!-- MEL SANTA BÁRBARA -->
+  <div class="case-card reveal">
+    <div class="case-visual">
+      <!-- Inserir: videos/mel-santa-barbara.mp4 -->
+      <div class="case-phones-stack">
+        <div class="case-phone bg-mel">
+        <video src="videos/mel-santa-barbara.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+        <div class="case-phone bg-mel" style="background:#120e04;">
+        <video src="videos/mel-santa-barbara-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <div class="case-seg">Produto Alimentício</div>
+      <h2 class="case-brand">Mel Santa Bárbara</h2>
+      <p class="case-tagline">Compartilhando os sabores de Minas</p>
+      <p class="case-desc">Gestão de redes sociais e criação de conteúdo — do lançamento de produtos a vídeos em trends, conteúdos reais, despertando desejo e lembranças.</p>
+      <div class="case-tags"><span class="tag">Gestão de Redes</span><span class="tag">Criação de Conteúdo</span><span class="tag">Social Media</span><span class="tag">Stories</span><span class="tag">Atendimento publicitário</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="diferenciais">
+  <div class="sec-label reveal">Diferenciais</div>
+  <h2 class="dif-title reveal">Por que trabalhar <em>comigo</em></h2>
+  <div class="dif-grid reveal">
+    <div class="dif-card">
+      <h3 class="dif-card-title">Visão de <em>negócio</em></h3>
+      <p class="dif-card-text">Formação em Administração com MBA em Marketing — conteúdo criado com estratégia, não por instinto.</p>
+    </div>
+    <div class="dif-card">
+      <h3 class="dif-card-title">Escuta <em>ativa</em></h3>
+      <p class="dif-card-text">Defino posicionamento, linha editorial e direcionamento criativo com coerência e propósito comunicacional.</p>
+    </div>
+    <div class="dif-card">
+      <h3 class="dif-card-title"><em>Adaptabilidade</em></h3>
+      <p class="dif-card-text">Desenvolvo conteúdos pensados para clareza, consistência e conexão genuína com o público da marca.</p>
+    </div>
+    <div class="dif-card">
+      <h3 class="dif-card-title"><em>Consistência</em></h3>
+      <p class="dif-card-text">Monitoro resultados e faço ajustes contínuos para manter performance e posicionamento alinhados.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia">
+  <div class="sec-label reveal">Experiência</div>
+  <h2 class="exp-title reveal">Marcas com quem <em>já atuei</em></h2>
+  <p class="exp-sub reveal">Colaborei com diversas marcas em segmentos variados.</p>
+  <div class="marquee-wrap reveal" aria-label="Lista de marcas atendidas">
+    <div class="marquee-track">
+      <span class="marquee-item">Nesher</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Tabone</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Notável</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Igeo</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Simplexr</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Mads</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Strong</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Marina Grill</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Uai Farma</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Unimar EAD</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">CTC Construções</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Zanzar</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Mel Santa Bárbara</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">NIC Cosméticos</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Infornet</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">DaSenhora · Senhora Pipoca</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Ticpull</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Zapex</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Toplar · Seumoretoplar</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Melquior</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Contagem Embalagens</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Incoterminas</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Vimaster</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Celflex</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Tigus Móveis</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Voll</span><span class="marquee-dot">·</span>
+      <!-- duplicado para loop contínuo -->
+      <span class="marquee-item">Nesher</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Tabone</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Notável</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Igeo</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Simplexr</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Mads</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Strong</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Marina Grill</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Uai Farma</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Unimar EAD</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">CTC Construções</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Zanzar</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Mel Santa Bárbara</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">NIC Cosméticos</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Infornet</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">DaSenhora · Senhora Pipoca</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Ticpull</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Zapex</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Toplar</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Melquior</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Contagem Embalagens</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Incoterminas</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Vimaster</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Celflex</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Tigus Móveis</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Voll</span><span class="marquee-dot">·</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="cta-label">Contato</div>
+  <h2 class="cta-title reveal">Vamos construir algo<br>com <em>propósito?</em></h2>
+  <p class="cta-sub reveal">Se você busca uma profissional que entende sua marca antes de sair postando, entre em contato. A conversa não compromete nada — e pode mudar bastante.</p>
+  <a href="https://wa.me/31998372929" class="cta-main-btn reveal" target="_blank" rel="noopener noreferrer" aria-label="Entre em contato via WhatsApp">
+    Vamos trabalhar juntos →
+  </a>
+  <div class="cta-contacts reveal">
+    <a href="mailto:anacarolinacssantiago@gmail.com" class="cta-link" aria-label="Enviar e-mail">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4aa70" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      anacarolinacssantiago@gmail.com
+    </a>
+    <a href="https://wa.me/31998372929" class="cta-link" target="_blank" rel="noopener noreferrer" aria-label="Contato via WhatsApp">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4aa70" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      (31) 99837-2929
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>ANC Serviços · Ana Carolina Santiago · 2026</p>
+  <p>Social Media · Atendimento Publicitário · Criação de Conteúdo</p>
+</footer>
+
+<script>
+// Intersection Observer para animações de entrada
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Marquee: drag to scroll left/right, auto-resumes when mouse leaves
+(function() {
+  const wrap = document.querySelector('.marquee-wrap');
+  const track = document.querySelector('.marquee-track');
+  if (!wrap || !track) return;
+
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let currentOffset = 0;
+  let animFrame;
+  const speed = 0.4; // px per frame (slow)
+
+  // Auto-scroll via requestAnimationFrame
+  function autoScroll() {
+    if (!isDragging) {
+      currentOffset -= speed;
+      // Reset when first half scrolled through (50%)
+      const totalW = track.scrollWidth / 2;
+      if (Math.abs(currentOffset) >= totalW) currentOffset = 0;
+      track.style.transform = `translateX(${currentOffset}px)`;
+    }
+    animFrame = requestAnimationFrame(autoScroll);
+  }
+  // Remove CSS animation, use JS instead
+  track.style.animation = 'none';
+  autoScroll();
+
+  wrap.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    wrap.classList.add('dragging', 'paused');
+    startX = e.pageX;
+    scrollLeft = currentOffset;
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.pageX - startX;
+    currentOffset = scrollLeft + dx;
+    track.style.transform = `translateX(${currentOffset}px)`;
+  });
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    wrap.classList.remove('dragging', 'paused');
+  });
+  // Touch support
+  wrap.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startX = e.touches[0].pageX;
+    scrollLeft = currentOffset;
+  }, {passive:true});
+  wrap.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const dx = e.touches[0].pageX - startX;
+    currentOffset = scrollLeft + dx;
+    track.style.transform = `translateX(${currentOffset}px)`;
+  }, {passive:true});
+  wrap.addEventListener('touchend', () => { isDragging = false; });
+})();
+</script>
+
+</body>
+</html>
